@@ -45,9 +45,9 @@ if [ "$git_remote" = "" ]; then # git remote not defined
 
 fi
 
-# git pull origin mock
+git pull origin api-mock
 
 # Pushes (Forces) the changes in the local repository up to the remote repository
 echo "Git pushing to https://github.com/${git_user_id}/${git_repo_id}.git"
-git push origin mock 2>&1 | grep -v 'To https'
+git push origin api-mock 2>&1 | grep -v 'To https'
 
