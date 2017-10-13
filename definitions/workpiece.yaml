@@ -3,29 +3,31 @@ Workpiece:
   type: object
   title: 被测工件
   required:
-    - PartId
+    - partId
+    - partName
+    - category
   properties:
-    PartId:
+    partId:
       type: string
       description: 部件Id
       x-chance-type: guid
-    Category:
+    category:
       type: string
       description: 部件类别
       default: 默认类别
       x-chance-type: word
-    PartName:
+    partName:
       type: string
       description: 品名
       x-chance-type: word
-    PartNumber:
+    partNumber:
       type: string
       description: 产品代码
       x-chance-type: string
-    PartDwgNo:
+    partDwgNo:
       type: string
       description: 图号/Part Drawing Number
-    Description:
+    description:
       type: string
       description: 产品描述
       x-chance-type: sentence

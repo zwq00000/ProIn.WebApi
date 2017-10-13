@@ -3,30 +3,30 @@ MeasureRecord:
   type: object
   title: 测量记录
   properties:
-    SessionId:
+    sessionId:
       type: integer
       format: int64
       title: 任务会话Id
       x-type-options:
         min: 1
         max: 10000
-    SpecId:
+    specId:
       type: string
       title: 规格Id
       x-chance-type: guid
-    Time:
+    time:
       type: string
       format: date-time
       title: 数据时间
       x-chance-type: date
-    Count:
+    count:
       type: integer
       format: int32
       title: 样本数量
       x-type-options:
         min: 1
         max: 10
-    Stdev:
+    stdev:
       type: number
       format: double
       title: 本组样本标准差
@@ -34,7 +34,7 @@ MeasureRecord:
         min: 1
         max: 10
         fixed: 3
-    Mean:
+    mean:
       type: number
       format: double
       title: 本组样本均值
@@ -42,7 +42,7 @@ MeasureRecord:
         min: 1
         max: 10
         fixed: 3
-    Range:
+    range:
       type: number
       format: double    
       title: 本组样本极差
@@ -50,7 +50,7 @@ MeasureRecord:
           min: 1
           max: 10
           fixed: 3
-    Values:
+    values:
       type: array
       title: 测量值
       items:

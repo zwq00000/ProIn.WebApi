@@ -503,29 +503,31 @@ definitions:
     type: object
     title: 被测工件
     required:
-      - PartId
+      - partId
+      - partName
+      - category
     properties:
-      PartId:
+      partId:
         type: string
         description: 部件Id
         x-chance-type: guid
-      Category:
+      category:
         type: string
         description: 部件类别
         default: 默认类别
         x-chance-type: word
-      PartName:
+      partName:
         type: string
         description: 品名
         x-chance-type: word
-      PartNumber:
+      partNumber:
         type: string
         description: 产品代码
         x-chance-type: string
-      PartDwgNo:
+      partDwgNo:
         type: string
         description: 图号/Part Drawing Number
-      Description:
+      description:
         type: string
         description: 产品描述
         x-chance-type: sentence
@@ -546,52 +548,54 @@ definitions:
     title: 检测项
     description: 检测项定义
     required:
-      - SpecId
-      - SpecName
+      - specId
+      - specName
+      - partId
+      - toleranceDefine
     properties:
-      SpecId:
+      specId:
         type: string
         description: 测量项目ID
         x-chance-type: guid
-      OrderNo:
+      orderNo:
         type: integer
         description: 默认顺序号，该检测项在任务中的排序
         format: int32
         x-type-options:
           min: 1
           max: 5
-      SpecName:
+      specName:
         type: string
         description: 项目名称
-      PartId:
+      partId:
         type: string
         description: 产品Id
         x-chance-type: guid
-      Standard:
+      standard:
         type: string
         description: 测量标准规范编号
-      GageType:
+      gageType:
         type: string
         description: 千分表/千分尺..
-      ValueType:
+      valueType:
         type: string
         description: 逻辑型或者 数值型
         enum:
           - Number
           - Logic
-      Precision:
+      precision:
         type: integer
         description: 测量精度，小数点后保留位数
-      Units:
+      units:
         type: string
         description: 测量单位 mm/N...
-      ToleranceDefine:
+      toleranceDefine:
         type: string
         description: 公差定义
-      Instruction:
+      instruction:
         type: string
         description: 操作说明
-      Usl:
+      usl:
         type: number
         description: 公差上限
         format: double
@@ -599,7 +603,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      Lsl:
+      lsl:
         type: number
         description: 公差下限
         format: double
@@ -607,7 +611,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      M:
+      m:
         type: number
         description: 中心值
         readOnly: true
@@ -616,7 +620,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      T:
+      t:
         type: number
         description: 目标值
         format: double
@@ -629,41 +633,41 @@ definitions:
     title: 任务会话
     description: 测量任务会话
     properties:
-      SessionId:
+      sessionId:
         type: integer
         format: int64
         description: 任务会话Id
         x-type-options:
           min: 1
           max: 10000
-      PartId:
+      partId:
         type: string
         description: 部件Id
         x-chance-type: guid
-      MeasureTime:
+      measureTime:
         type: string
         format: date-time
         description: 测量时间
         x-chance-type: date
-      Batch:
+      batch:
         type: string
         description: 产品批号
         x-chance-type: timestamp
-      Operator:
+      operator:
         type: string
         description: 操作员
         x-chance-type: name
-      Team:
+      team:
         type: string
         description: 班组
         x-chance-type: character
         x-type-options:
           pool: ABCDEFG
-      EquipmentNum:
+      equipmentNum:
         type: string
         description: 设备编号
         x-chance-type: bb_pin
-      Records:
+      records:
         type: array
         items:
           $ref: '#/definitions/MeasureRecord'
@@ -683,30 +687,30 @@ definitions:
     type: object
     title: 测量记录
     properties:
-      SessionId:
+      sessionId:
         type: integer
         format: int64
         title: 任务会话Id
         x-type-options:
           min: 1
           max: 10000
-      SpecId:
+      specId:
         type: string
         title: 规格Id
         x-chance-type: guid
-      Time:
+      time:
         type: string
         format: date-time
         title: 数据时间
         x-chance-type: date
-      Count:
+      count:
         type: integer
         format: int32
         title: 样本数量
         x-type-options:
           min: 1
           max: 10
-      Stdev:
+      stdev:
         type: number
         format: double
         title: 本组样本标准差
@@ -714,7 +718,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      Mean:
+      mean:
         type: number
         format: double
         title: 本组样本均值
@@ -722,7 +726,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      Range:
+      range:
         type: number
         format: double
         title: 本组样本极差
@@ -730,7 +734,7 @@ definitions:
           min: 1
           max: 10
           fixed: 3
-      Values:
+      values:
         type: array
         title: 测量值
         items:
@@ -766,27 +770,27 @@ definitions:
     type: object
     title: 用户
     required:
-      - UserId
-      - UserName
-      - FullName
+      - userId
+      - userName
+      - fullName
     properties:
-      UserId:
+      userId:
         type: string
         title: 用户Id
         x-chance-type: guid
-      UserName:
+      userName:
         type: string
         title: 登录名
         x-chance-type: word
-      FullName:
+      fullName:
         type: string
         title: 用户全名
         x-chance-type: name
-      Avatar:
+      avatar:
         type: string
         title: 用户头像
         x-chance-type: avatar
-      DepName:
+      depName:
         type: string
         title: 部门名称
         x-chance-type: name
@@ -798,17 +802,17 @@ definitions:
         x-type-value:
           - admin
           - user
-      Email:
+      email:
         type: string
         format: email
         title: 用户邮箱地址
         x-chance-type: email
-      CreateDate:
+      createDate:
         type: string
         format: date-time
         title: 用户创建日期
         x-chance-type: date
-      LastLoginDate:
+      lastLoginDate:
         type: string
         format: date-time
         title: 上次登录日期

@@ -3,27 +3,27 @@ User:
   type: object
   title: 用户
   required:
-    - UserId
-    - UserName
-    - FullName
+    - userId
+    - userName
+    - fullName
   properties:
-    UserId:
+    userId:
       type: string
       title: 用户Id
       x-chance-type: guid
-    UserName:
+    userName:
       type: string
       title: 登录名
       x-chance-type: word
-    FullName:
+    fullName:
       type: string
       title: 用户全名
       x-chance-type: name
-    Avatar:
+    avatar:
       type: string
       title: 用户头像
       x-chance-type: avatar
-    DepName:
+    depName:
       type: string
       title: 部门名称
       x-chance-type: name
@@ -35,17 +35,17 @@ User:
       x-type-value: 
         - admin
         - user
-    Email:
+    email:
       type: string
       format: email
       title: 用户邮箱地址
       x-chance-type: email
-    CreateDate:
+    createDate:
       type: string
       format: date-time
       title: 用户创建日期
       x-chance-type: date
-    LastLoginDate:
+    lastLoginDate:
       type: string
       format: date-time
       title: 上次登录日期
