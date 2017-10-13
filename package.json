@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "the proin.webapi swagger definition",
+  "main": "index.js",
+  "scripts": {
+    "build": "multi-file-swagger index.yaml -o yaml -f swagger.yaml && swagger validate swagger.yaml",
+    "gen-test": "swagger project generate-test  -f request -t should  apitest",
+    "test": "swagger project test apitest",
+    "mock": "cd api-mock && grunt"
+  },
+  "author": "zwq00000@gmail.com",
+  "license": "ISC"
+}

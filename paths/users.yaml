@@ -1,0 +1,87 @@
+##### 用户集合 #####
+users:
+  get:
+    operationId: getUsers
+    description: 获取用户列表
+    tags:
+      - User
+    parameters:
+      - name: pageSize
+        in: query
+        description: Number of items returned
+        type: integer
+        default: 20
+        required: false
+        enum: [10,20,50,100]
+      - name: pageNumber
+        in: query
+        description: Page number
+        type: integer
+        default: 0
+        required: false
+    responses:
+      200:
+        description: responses a list of users
+        schema:
+          $ref: "#/definitions/PagedUsers"
+      404:
+        description: not found user list
+  post:
+    operationId: createUser
+    description: 创建用户
+    summary: 提交并创建用户
+    tags:
+      - User
+    parameters:
+      - name: user
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+    responses:
+      201:
+        description: 用户创建成功
+        schema:
+          $ref: "#/definitions/User"
+      400:
+        $ref: "#/responses/BadRequest"
+  put:
+    operationId: updateUser
+    description: 更新用户数据
+    summary: 提交并更新用户数据
+    tags:
+      - User
+    parameters:
+      - name: user
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+    responses:
+      201:
+        description: 用户数据更新成功
+        schema:
+          $ref: "#/definitions/User"
+      400:
+        $ref: "#/responses/BadRequest"
+
+
+##### 根据用户Id 获取用户信息 #####
+users_{uid}:
+  parameters:
+    - name: uid
+      in: path
+      type: string
+      required: true
+  get:
+    operationId: getUser
+    description: 根据 UserId 获取用户实例
+    tags:
+      - User
+    responses:
+      200:
+        description: get the user data
+        schema:
+          $ref: "#/definitions/User"
+      404:
+        description: not found the user

@@ -1,0 +1,24 @@
+##### 测量值 #####
+## 传递测量值集合 ##
+MeasureValue:
+  type: object
+  title: 测量值
+  properties:
+    count:
+      title: 数量
+      type: number
+      format: int32
+      x-chance-type: integer
+      x-type-options:
+        min: 10
+        max: 100
+    data:
+      title: 测量值数组
+      type: array
+      items:
+        type: number
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 2

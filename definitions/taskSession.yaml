@@ -1,0 +1,57 @@
+##### ITaskSession 测量任务会话 #####
+TaskSession:
+  type: object
+  title: 任务会话
+  description: 测量任务会话
+  properties:
+    SessionId:
+      type: integer
+      format: int64
+      description: 任务会话Id
+      x-type-options:
+        min: 1
+        max: 10000
+    PartId:
+      type: string
+      description: 部件Id
+      x-chance-type: guid
+    MeasureTime:
+      type: string
+      format: date-time
+      description: 测量时间
+      x-chance-type: date
+    Batch:
+      type: string
+      description: 产品批号
+      x-chance-type: timestamp
+    Operator:
+      type: string
+      description: 操作员
+      x-chance-type: name
+    Team:
+      type: string
+      description: 班组
+      x-chance-type: character
+      x-type-options:
+        pool: 'ABCDEFG'
+    EquipmentNum:
+      type: string
+      description: 设备编号
+      x-chance-type: bb_pin
+    Records:
+      type: array
+      items:
+        $ref: "#/definitions/MeasureRecord"
+
+PagedTaskSessions:
+  type: object
+  title: 分页的测量任务列表
+  properties:
+    paging:
+      description: 分页数据
+      $ref: "#/definitions/Paging"
+    data:
+      description: 工件集合
+      type: array
+      items:
+        $ref: "#/definitions/TaskSession"

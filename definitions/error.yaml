@@ -1,0 +1,15 @@
+##### 标准错误信息 #####
+Error:
+  type: object
+  title: 错误信息
+  description: 通用的错误响应结果
+  properties:
+    code:
+      type: string
+    message:
+      type: string
+
+##### 序列化的模型状态错误信息 #####
+ModelStateDictionary:
+  type: object
+  

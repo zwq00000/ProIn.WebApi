@@ -1,0 +1,33 @@
+swagger: "2.0"
+
+info:
+  $ref: info.yaml
+
+schemes:
+  - http
+  - https
+
+basePath: /v1
+
+produces:
+  - application/json
+consumes:
+  - application/json
+  - multipart/form-data
+
+tags:
+  $ref: tags.yaml#/tags
+
+paths:
+  $ref: paths/index.yaml
+
+definitions:
+  $ref: definitions/index.yaml
+
+parameters:
+  $ref: parameters.yaml#/parameters
+
+responses:
+  $ref: responses.yaml#/responses
+
+

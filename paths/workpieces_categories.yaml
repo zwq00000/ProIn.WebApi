@@ -1,0 +1,16 @@
+##### 工件分类 #####
+categories:
+  get:
+    operationId: getCategories
+    summary: 获取工件分类列表
+    tags:
+      - Workpiece
+    responses:
+      200:
+        description: A list of workpiece category
+        schema:
+          type: array
+          items:
+            type: string
+            x-chance-type: word
+

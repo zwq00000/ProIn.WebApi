@@ -1,0 +1,969 @@
+swagger: '2.0'
+info:
+  description: This is a ProIn data access WebApi
+  version: 1.0.0
+  title: ProIn.WebApi
+  contact:
+    email: zwq00000@hotmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+schemes:
+  - http
+  - https
+basePath: /v1
+produces:
+  - application/json
+consumes:
+  - application/json
+  - multipart/form-data
+tags:
+  - name: Workpiece
+    description: 测量工件
+    externalDocs:
+      description: Find out more
+      url: 'http://primen.net'
+  - name: CpSpec
+    description: 检测规格
+    externalDocs:
+      description: Find out more
+      url: 'http://primen.net'
+  - name: TaskSession
+    description: 测量任务
+    externalDocs:
+      description: Find out more
+      url: 'http://primen.net'
+  - name: MeasureTask
+    description: 测量任务
+  - name: MeasureValue
+    description: 测量值
+  - name: User
+    description: 用户
+  - name: Account
+    description: 用户登录和账户
+paths:
+  /workpieces:
+    get:
+      operationId: getWorkpieces
+      summary: 获得一个分页的工件列表
+      description: 'Returns a list of all workpieces,the list supports paging.'
+      tags:
+        - Workpiece
+      parameters:
+        - $ref: '#/parameters/pageSize'
+        - $ref: '#/parameters/pageNumber'
+        - $ref: '#/parameters/searchStr'
+        - $ref: '#/parameters/category'
+      responses:
+        '200':
+          description: 包含分页信息的工件列表
+          schema:
+            $ref: '#/definitions/PagedWorkpieces'
+    post:
+      operationId: createWorkpiece
+      summary: 提交一个新的工件信息
+      description: Adds a new workpiece to the workpieces list.
+      tags:
+        - Workpiece
+      parameters:
+        - name: workpiece
+          in: body
+          description: The workpiece to create.
+          schema:
+            $ref: '#/definitions/Workpiece'
+      responses:
+        '201':
+          description: workpiece succesfully created.
+          schema:
+            $ref: '#/definitions/Workpiece'
+        '400':
+          $ref: '#/responses/BadRequest'
+    put:
+      operationId: updateWorkpiece
+      summary: 修改并更新一个 Workpiece 实例
+      tags:
+        - Workpiece
+      parameters:
+        - name: workpiece
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Workpiece'
+      responses:
+        '201':
+          description: modify succesfully workpiece
+          schema:
+            $ref: '#/definitions/Workpiece'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '404':
+          description: not found existed workpiece
+  /workpieces/new:
+    get:
+      operationId: getNewWorkpiece
+      summary: 获得新的的工件
+      description: 返回一个空白工件定义
+      tags:
+        - Workpiece
+      responses:
+        '200':
+          description: 空白的工件对象
+          schema:
+            $ref: '#/definitions/Workpiece'
+  '/workpieces/{partId}':
+    parameters:
+      - name: partId
+        in: path
+        required: true
+        description: The Workpiece PartId
+        type: string
+    get:
+      tags:
+        - Workpiece
+      operationId: getWorkpiece
+      summary: get a workpiece
+      description: return a single workpiece for its partId
+      responses:
+        '200':
+          description: return a Workpiece
+          schema:
+            $ref: '#/definitions/Workpiece'
+        '404':
+          $ref: '#/responses/NotFound'
+    delete:
+      operationId: deleteWorkpiece
+      summary: delete a workpiece
+      tags:
+        - Workpiece
+      responses:
+        '204':
+          description: delete succesfully workpiece
+        '404':
+          $ref: '#/responses/NotFound'
+  '/workpieces/{partId}/cpspecs':
+    get:
+      summary: get a cpspec list in thie workpiece
+      operationId: getCpspecsByPartId
+      tags:
+        - CpSpec
+      parameters:
+        - name: partId
+          in: path
+          required: true
+          description: the Workpiece PartId
+          type: string
+      responses:
+        '200':
+          description: return a cpspec list
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CpSpec'
+        '404':
+          $ref: '#/responses/NotFound'
+  /categories:
+    get:
+      operationId: getCategories
+      summary: 获取工件分类列表
+      tags:
+        - Workpiece
+      responses:
+        '200':
+          description: A list of workpiece category
+          schema:
+            type: array
+            items:
+              type: string
+              x-chance-type: word
+  '/cpspec/{specId}':
+    parameters:
+      - name: specId
+        in: path
+        required: true
+        description: The CpSpec Id
+        type: string
+    get:
+      tags:
+        - CpSpec
+      operationId: getCpspec
+      summary: get a cpspec
+      responses:
+        '200':
+          description: CpSpec succesfully.
+          schema:
+            $ref: '#/definitions/CpSpec'
+        '404':
+          $ref: '#/responses/NotFound'
+    post:
+      operationId: createCpspec
+      summary: Creates a CpSpec
+      description: Adds a new CpSpec to the CpSpecs list.
+      tags:
+        - CpSpec
+      parameters:
+        - name: CpSpec
+          in: body
+          description: The cpspec to create.
+          schema:
+            $ref: '#/definitions/CpSpec'
+      responses:
+        '201':
+          description: CpSpec succesfully created.
+          schema:
+            $ref: '#/definitions/CpSpec'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '404':
+          $ref: '#/responses/NotFound'
+    put:
+      operationId: updateCpspec
+      summary: modify a cpspec
+      tags:
+        - CpSpec
+      parameters:
+        - name: cpspec
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CpSpec'
+      responses:
+        '201':
+          description: modify succesfully CpSpec
+          schema:
+            $ref: '#/definitions/CpSpec'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '404':
+          $ref: '#/responses/NotFound'
+    delete:
+      operationId: deleteCpspec
+      summary: delete a CpSpec
+      tags:
+        - CpSpec
+      responses:
+        '204':
+          description: delete succesfully CpSpec
+        '404':
+          $ref: '#/responses/NotFound'
+  /taskSessions:
+    get:
+      operationId: getMeasureTasks
+      summary: 获取测量任务分页列表
+      description: 获取已经完成的测量任务列表
+      tags:
+        - TaskSession
+      parameters:
+        - name: pageSize
+          in: query
+          description: Number of items returned
+          type: integer
+          default: 20
+          required: false
+          enum:
+            - 10
+            - 20
+            - 50
+            - 100
+        - name: pageNumber
+          in: query
+          description: Page number
+          type: integer
+          default: 0
+          required: false
+        - name: partId
+          in: query
+          type: string
+          description: 工件Id
+          required: false
+        - name: startDate
+          type: string
+          format: date
+          in: query
+          description: 'Task start Data Range,,if empty use today'
+          required: false
+        - name: endDate
+          type: string
+          format: date
+          in: query
+          description: 'Task end Data Range,if empty use today'
+          required: false
+      responses:
+        '200':
+          description: response a list of TaskSessions
+          schema:
+            $ref: '#/definitions/PagedTaskSessions'
+        '404':
+          $ref: '#/responses/NotFound'
+    post:
+      operationId: createTaskSession
+      summary: create a TaskSession
+      description: 测量完成后，提交测量结果
+      tags:
+        - TaskSession
+      parameters:
+        - name: taskSession
+          in: body
+          description: measureTeask and values
+          schema:
+            $ref: '#/definitions/TaskSession'
+      responses:
+        '201':
+          description: taskSession succesfully posted
+        '400':
+          $ref: '#/responses/BadRequest'
+  '/taskSessions/{ssid}':
+    get:
+      operationId: getTaskSession
+      summary: get a taskSession by sessionId
+      tags:
+        - TaskSession
+      parameters:
+        - name: ssid
+          in: path
+          type: integer
+          format: int64
+          required: true
+      responses:
+        '200':
+          description: response a taskSession
+          schema:
+            $ref: '#/definitions/TaskSession'
+        '404':
+          $ref: '#/responses/NotFound'
+  '/measureValue/{specId}':
+    parameters:
+      - name: specId
+        in: path
+        description: 检测项Id
+        required: true
+        type: string
+    get:
+      operationId: getMeasureValue
+      summary: 获取测量值(数值集合)
+      tags:
+        - MeasureValue
+      parameters:
+        - name: startDate
+          in: query
+          description: 开始日期
+          type: string
+          format: date
+        - name: endDate
+          in: query
+          description: 结束日期
+          type: string
+          format: date
+      responses:
+        '200':
+          description: 返回测量值集合
+          schema:
+            $ref: '#/definitions/MeasureValue'
+        '404':
+          $ref: '#/responses/NotFound'
+  /users:
+    get:
+      operationId: getUsers
+      description: 获取用户列表
+      tags:
+        - User
+      parameters:
+        - name: pageSize
+          in: query
+          description: Number of items returned
+          type: integer
+          default: 20
+          required: false
+          enum:
+            - 10
+            - 20
+            - 50
+            - 100
+        - name: pageNumber
+          in: query
+          description: Page number
+          type: integer
+          default: 0
+          required: false
+      responses:
+        '200':
+          description: responses a list of users
+          schema:
+            $ref: '#/definitions/PagedUsers'
+        '404':
+          description: not found user list
+    post:
+      operationId: createUser
+      description: 创建用户
+      summary: 提交并创建用户
+      tags:
+        - User
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: 用户创建成功
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          $ref: '#/responses/BadRequest'
+    put:
+      operationId: updateUser
+      description: 更新用户数据
+      summary: 提交并更新用户数据
+      tags:
+        - User
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: 用户数据更新成功
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          $ref: '#/responses/BadRequest'
+  '/users/{uid}':
+    parameters:
+      - name: uid
+        in: path
+        type: string
+        required: true
+    get:
+      operationId: getUser
+      description: 根据 UserId 获取用户实例
+      tags:
+        - User
+      responses:
+        '200':
+          description: get the user data
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: not found the user
+  /account/login:
+    post:
+      operationId: login
+      description: 用户登录
+      tags:
+        - Account
+      parameters:
+        - $ref: '#/parameters/loginInfo'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserInfo'
+        '400':
+          description: Invalid username/password supplied
+  /account/info:
+    get:
+      operationId: getUserInfo
+      description: 获取当前用户信息
+      tags:
+        - Account
+      parameters:
+        - name: token
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 返回一个用户信息对象
+          schema:
+            $ref: '#/definitions/UserInfo'
+        '400':
+          description: 用户不存在或者超期
+  /account/logout:
+    post:
+      operationId: logout
+      description: 用户注销
+      tags:
+        - Account
+      parameters:
+        - in: query
+          name: token
+          type: string
+          required: true
+      responses:
+        '201':
+          description: 用户成功注销
+          schema:
+            type: string
+        '400':
+          description: 用户不存在
+definitions:
+  Workpiece:
+    type: object
+    title: 被测工件
+    required:
+      - PartId
+    properties:
+      PartId:
+        type: string
+        description: 部件Id
+        x-chance-type: guid
+      Category:
+        type: string
+        description: 部件类别
+        default: 默认类别
+        x-chance-type: word
+      PartName:
+        type: string
+        description: 品名
+        x-chance-type: word
+      PartNumber:
+        type: string
+        description: 产品代码
+        x-chance-type: string
+      PartDwgNo:
+        type: string
+        description: 图号/Part Drawing Number
+      Description:
+        type: string
+        description: 产品描述
+        x-chance-type: sentence
+  PagedWorkpieces:
+    type: object
+    title: 工件分页结果
+    properties:
+      paging:
+        description: 分页数据
+        $ref: '#/definitions/Paging'
+      data:
+        description: 工件集合
+        type: array
+        items:
+          $ref: '#/definitions/Workpiece'
+  CpSpec:
+    type: object
+    title: 检测项
+    description: 检测项定义
+    required:
+      - SpecId
+      - SpecName
+    properties:
+      SpecId:
+        type: string
+        description: 测量项目ID
+        x-chance-type: guid
+      OrderNo:
+        type: integer
+        description: 默认顺序号，该检测项在任务中的排序
+        format: int32
+        x-type-options:
+          min: 1
+          max: 5
+      SpecName:
+        type: string
+        description: 项目名称
+      PartId:
+        type: string
+        description: 产品Id
+        x-chance-type: guid
+      Standard:
+        type: string
+        description: 测量标准规范编号
+      GageType:
+        type: string
+        description: 千分表/千分尺..
+      ValueType:
+        type: string
+        description: 逻辑型或者 数值型
+        enum:
+          - Number
+          - Logic
+      Precision:
+        type: integer
+        description: 测量精度，小数点后保留位数
+      Units:
+        type: string
+        description: 测量单位 mm/N...
+      ToleranceDefine:
+        type: string
+        description: 公差定义
+      Instruction:
+        type: string
+        description: 操作说明
+      Usl:
+        type: number
+        description: 公差上限
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      Lsl:
+        type: number
+        description: 公差下限
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      M:
+        type: number
+        description: 中心值
+        readOnly: true
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      T:
+        type: number
+        description: 目标值
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+  TaskSession:
+    type: object
+    title: 任务会话
+    description: 测量任务会话
+    properties:
+      SessionId:
+        type: integer
+        format: int64
+        description: 任务会话Id
+        x-type-options:
+          min: 1
+          max: 10000
+      PartId:
+        type: string
+        description: 部件Id
+        x-chance-type: guid
+      MeasureTime:
+        type: string
+        format: date-time
+        description: 测量时间
+        x-chance-type: date
+      Batch:
+        type: string
+        description: 产品批号
+        x-chance-type: timestamp
+      Operator:
+        type: string
+        description: 操作员
+        x-chance-type: name
+      Team:
+        type: string
+        description: 班组
+        x-chance-type: character
+        x-type-options:
+          pool: ABCDEFG
+      EquipmentNum:
+        type: string
+        description: 设备编号
+        x-chance-type: bb_pin
+      Records:
+        type: array
+        items:
+          $ref: '#/definitions/MeasureRecord'
+  PagedTaskSessions:
+    type: object
+    title: 分页的测量任务列表
+    properties:
+      paging:
+        description: 分页数据
+        $ref: '#/definitions/Paging'
+      data:
+        description: 工件集合
+        type: array
+        items:
+          $ref: '#/definitions/TaskSession'
+  MeasureRecord:
+    type: object
+    title: 测量记录
+    properties:
+      SessionId:
+        type: integer
+        format: int64
+        title: 任务会话Id
+        x-type-options:
+          min: 1
+          max: 10000
+      SpecId:
+        type: string
+        title: 规格Id
+        x-chance-type: guid
+      Time:
+        type: string
+        format: date-time
+        title: 数据时间
+        x-chance-type: date
+      Count:
+        type: integer
+        format: int32
+        title: 样本数量
+        x-type-options:
+          min: 1
+          max: 10
+      Stdev:
+        type: number
+        format: double
+        title: 本组样本标准差
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      Mean:
+        type: number
+        format: double
+        title: 本组样本均值
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      Range:
+        type: number
+        format: double
+        title: 本组样本极差
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      Values:
+        type: array
+        title: 测量值
+        items:
+          type: number
+          format: double
+          x-type-options:
+            min: 1
+            max: 10
+            fixed: 3
+  MeasureValue:
+    type: object
+    title: 测量值
+    properties:
+      count:
+        title: 数量
+        type: number
+        format: int32
+        x-chance-type: integer
+        x-type-options:
+          min: 10
+          max: 100
+      data:
+        title: 测量值数组
+        type: array
+        items:
+          type: number
+          format: double
+          x-type-options:
+            min: 1
+            max: 10
+            fixed: 2
+  User:
+    type: object
+    title: 用户
+    required:
+      - UserId
+      - UserName
+      - FullName
+    properties:
+      UserId:
+        type: string
+        title: 用户Id
+        x-chance-type: guid
+      UserName:
+        type: string
+        title: 登录名
+        x-chance-type: word
+      FullName:
+        type: string
+        title: 用户全名
+        x-chance-type: name
+      Avatar:
+        type: string
+        title: 用户头像
+        x-chance-type: avatar
+      DepName:
+        type: string
+        title: 部门名称
+        x-chance-type: name
+      roles:
+        type: string
+        title: 角色列表
+        description: '使用 '','' 分隔的用户角色'
+        x-chance-type: fixed
+        x-type-value:
+          - admin
+          - user
+      Email:
+        type: string
+        format: email
+        title: 用户邮箱地址
+        x-chance-type: email
+      CreateDate:
+        type: string
+        format: date-time
+        title: 用户创建日期
+        x-chance-type: date
+      LastLoginDate:
+        type: string
+        format: date-time
+        title: 上次登录日期
+        x-chance-type: date
+  PagedUsers:
+    type: object
+    title: 分页用户列表
+    description: 用户信息分页列表
+    properties:
+      paging:
+        title: 分页数据
+        $ref: '#/definitions/Paging'
+      data:
+        title: 用户集合
+        type: array
+        items:
+          $ref: '#/definitions/User'
+  UserInfo:
+    type: object
+    title: 用户信息
+    description: 用户信息
+    properties:
+      name:
+        type: string
+        title: 用户名
+        x-chance-type: name
+      avatar:
+        type: string
+        title: 用户头像
+        x-chance-type: avatar
+      role:
+        type: string
+        title: 角色
+        x-chance-type: fixed
+        x-type-value:
+          - admin
+          - user
+      token:
+        type: string
+        title: 用户令牌
+        x-chance-type: hash
+  LoginInfo:
+    type: object
+    title: 登录信息
+    description: 用户登录信息
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+        title: 登录名
+        x-chance-type: name
+      password:
+        type: string
+        format: password
+  Paging:
+    type: object
+    title: 分页结果
+    description: 分页显示的结果数据
+    properties:
+      total:
+        description: 总数量
+        type: integer
+        default: 0
+        format: int32
+        x-type-options:
+          min: 1
+          max: 200
+      pageCount:
+        description: 总页数
+        type: integer
+        default: 0
+        format: int32
+        x-type-options:
+          min: 1
+          max: 20
+      pageSize:
+        description: 页面大小
+        type: integer
+        default: 20
+        format: int32
+        x-type-options:
+          min: 10
+          max: 100
+      currentPage:
+        description: 当前页码
+        type: integer
+        default: 0
+        format: int32
+        x-type-options:
+          min: 1
+          max: 20
+  Error:
+    type: object
+    title: 错误信息
+    description: 通用的错误响应结果
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+  ModelStateDictionary:
+    type: object
+parameters:
+  partId:
+    name: partId
+    in: path
+    required: true
+    description: The workpiece's Id
+    type: string
+  pageSize:
+    name: pageSize
+    in: query
+    description: 页面大小
+    type: integer
+    default: 20
+    required: false
+    enum:
+      - 10
+      - 20
+      - 50
+      - 100
+  pageNumber:
+    name: pageNumber
+    in: query
+    description: 页码，从 0 开始
+    type: integer
+    default: 0
+  searchStr:
+    name: searchStr
+    in: query
+    description: 搜索关键词
+    type: string
+    required: false
+  category:
+    name: category
+    in: query
+    description: 工件分类名称
+    type: string
+    required: false
+  loginInfo:
+    name: loginInfo
+    in: body
+    description: 登录信息
+    schema:
+      $ref: '#/definitions/LoginInfo'
+responses:
+  Standard500ErrorResponse:
+    description: An unexpected error occured.
+    schema:
+      $ref: '#/definitions/Error'
+  BadRequest:
+    description: bed request or model not validated
+    schema:
+      $ref: '#/definitions/ModelStateDictionary'
+  NotFound:
+    description: not found

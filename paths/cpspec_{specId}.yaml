@@ -1,0 +1,74 @@
+##### /cpspecs #####
+path:
+  parameters:
+    - name: specId
+      in: path
+      required: true
+      description: The CpSpec Id
+      type: string
+  get:
+    tags:
+      - CpSpec
+    operationId: getCpspec
+    summary: get a cpspec
+    responses:
+      200:
+        description: CpSpec succesfully.
+        schema:
+          $ref: '#/definitions/CpSpec'
+      404:
+        $ref: "#/responses/NotFound"
+
+  post:
+    operationId: createCpspec
+    summary: Creates a CpSpec
+    description: Adds a new CpSpec to the CpSpecs list.
+    tags:
+      - CpSpec
+    parameters:
+      - name: CpSpec
+        in: body
+        description: The cpspec to create.
+        schema:
+          $ref: "#/definitions/CpSpec"
+    responses:
+      201:
+        description: CpSpec succesfully created.
+        schema:
+          $ref: "#/definitions/CpSpec"
+      400:
+        $ref: "#/responses/BadRequest"
+      404:
+        $ref: "#/responses/NotFound"
+
+  put:
+    operationId: updateCpspec
+    summary: modify a cpspec
+    tags:
+      - CpSpec
+    parameters:
+      - name: cpspec
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/CpSpec"
+    responses:
+      201:
+        description: modify succesfully CpSpec
+        schema:
+          $ref: "#/definitions/CpSpec"
+      400:
+        $ref: "#/responses/BadRequest"
+      404:
+        $ref: "#/responses/NotFound"
+
+  delete:
+    operationId: deleteCpspec
+    summary: delete a CpSpec
+    tags:
+      - CpSpec
+    responses:
+      204:
+        description: delete succesfully CpSpec
+      404:
+        $ref: "#/responses/NotFound"

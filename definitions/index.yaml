@@ -1,0 +1,46 @@
+##### 工件 #####
+Workpiece:
+  $ref: workpiece.yaml#/Workpiece
+## Workpieces:
+##   $ref: workpiece.yaml#/Workpieces
+PagedWorkpieces:
+  $ref: workpiece.yaml#/PagedWorkpieces
+
+##### 测量规格 #####
+CpSpec:
+  $ref: cpspec.yaml#/CpSpec
+
+##### 测量任务 #####
+TaskSession:
+  $ref: TaskSession.yaml#/TaskSession
+PagedTaskSessions:
+  $ref: TaskSession.yaml#/PagedTaskSessions
+MeasureRecord:
+  $ref: measureRecord.yaml#/MeasureRecord
+
+##### 测量值 #####
+MeasureValue:
+  $ref: measureValue.yaml#/MeasureValue
+
+
+##### 用户 #####  
+User:
+  $ref: user.yaml#/User
+PagedUsers:
+  $ref: user.yaml#/PagedUsers
+
+##### Account #####
+UserInfo:
+  $ref: account.yaml#/UserInfo
+LoginInfo:
+  $ref: account.yaml#/LoginInfo
+
+Paging:
+  $ref: paging.yaml#/Paging
+
+##### 错误信息 #####
+Error:
+  $ref: error.yaml#/Error
+
+ModelStateDictionary:
+  $ref: error.yaml#/ModelStateDictionary

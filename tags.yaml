@@ -1,0 +1,30 @@
+tags:
+- name: "Workpiece"
+  description: "测量工件"
+  externalDocs:
+    description: "Find out more"
+    url: "http://primen.net"
+
+- name: "CpSpec"
+  description: "检测规格"
+  externalDocs:
+    description: "Find out more"
+    url: "http://primen.net"
+
+- name: TaskSession
+  description: 测量任务
+  externalDocs:
+    description: "Find out more"
+    url: "http://primen.net"
+
+- name: MeasureTask
+  description: 测量任务
+  
+- name: MeasureValue
+  description: 测量值
+
+- name: User
+  description: 用户
+
+- name: Account
+  description: 用户登录和账户

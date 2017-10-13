@@ -1,0 +1,60 @@
+#/workpiece:
+workpieces:
+  get:
+    operationId: getWorkpieces
+    summary: 获得一个分页的工件列表
+    description: Returns a list of all workpieces,the list supports paging.
+    tags:
+      - Workpiece
+    parameters:
+      - $ref: "#/parameters/pageSize"
+      - $ref: "#/parameters/pageNumber"
+      - $ref: "#/parameters/searchStr"
+      - $ref: "#/parameters/category"
+    responses:
+      200:
+        description: 包含分页信息的工件列表
+        schema:
+          $ref: "#/definitions/PagedWorkpieces"
+
+  post:
+    operationId: createWorkpiece
+    summary: 提交一个新的工件信息
+    description: Adds a new workpiece to the workpieces list.
+    tags:
+      - Workpiece
+    parameters:
+      - name: workpiece
+        in: body
+        description: The workpiece to create.
+        schema:
+          $ref: "#/definitions/Workpiece"
+    responses:
+      201:
+        description: workpiece succesfully created.
+        schema:
+          $ref: "#/definitions/Workpiece"
+      400:
+        $ref: "#/responses/BadRequest"
+
+  put:
+    operationId: updateWorkpiece
+    summary: 修改并更新一个 Workpiece 实例
+    tags:
+      - Workpiece
+    parameters:
+      - name: workpiece
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/Workpiece"
+    responses:
+      201:
+        description: modify succesfully workpiece
+        schema:
+          $ref: "#/definitions/Workpiece"
+      400:
+        $ref: "#/responses/BadRequest"
+      404:
+        description: not found existed workpiece
+

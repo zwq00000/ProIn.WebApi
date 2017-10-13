@@ -1,0 +1,13 @@
+#/workpiece:
+workpieces_new:
+  get:
+    operationId: getNewWorkpiece
+    summary: 获得新的的工件
+    description: 返回一个空白工件定义
+    tags:
+      - Workpiece
+    responses:
+      200:
+        description: 空白的工件对象
+        schema:
+          $ref: "#/definitions/Workpiece"

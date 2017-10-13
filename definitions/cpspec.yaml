@@ -1,0 +1,84 @@
+ ################ 检测规格定义 ################
+  CpSpec:
+    type: object
+    title: 检测项
+    description: 检测项定义
+    required:
+      - SpecId
+      - SpecName
+    properties:
+      SpecId:
+        type: string
+        description: 测量项目ID
+        x-chance-type: guid
+      OrderNo:
+        type: integer
+        description: 默认顺序号，该检测项在任务中的排序
+        format: int32
+        x-type-options:
+          min: 1
+          max: 5
+      SpecName:
+        type: string
+        description: 项目名称
+      PartId:
+        type: string
+        description: 产品Id
+        x-chance-type: guid
+      Standard:
+        type: string
+        description: 测量标准规范编号
+      GageType:
+        type: string
+        description: 千分表/千分尺..
+      ValueType:
+        type: string
+        description: 逻辑型或者 数值型
+        enum:
+          - Number
+          - Logic
+      Precision:
+        type: integer
+        description: 测量精度，小数点后保留位数
+      Units:
+        type: string
+        description: 测量单位 mm/N...
+      ToleranceDefine:
+        type: string
+        description: 公差定义
+      Instruction:
+        type: string
+        description: 操作说明
+      Usl:
+        type: number
+        description: 公差上限
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      Lsl:
+        type: number
+        description: 公差下限
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      M:
+        type: number
+        description: 中心值
+        readOnly: true
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+      T:
+        type: number
+        description: 目标值
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3

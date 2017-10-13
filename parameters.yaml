@@ -1,0 +1,42 @@
+################ 参数定义 ################
+parameters:
+  partId:
+    name: partId
+    in: path
+    required: true
+    description: The workpiece's Id
+    type: string
+  pageSize:
+    name: pageSize
+    in: query
+    description: 页面大小
+    type: integer
+    default: 20
+    required: false
+    enum: [10,20,50,100]
+  pageNumber:
+    name: pageNumber
+    in: query
+    description: 页码，从 0 开始
+    type: integer
+    default: 0
+  searchStr:
+    name: searchStr
+    in: query
+    description: 搜索关键词
+    type: string
+    required: false
+  category:
+    name: category
+    in: query
+    description: 工件分类名称
+    type: string
+    required: false
+    
+  ##### 用户登录信息 #####
+  loginInfo:
+    name: loginInfo
+    in: body
+    description: 登录信息
+    schema:
+      $ref: "#/definitions/LoginInfo"

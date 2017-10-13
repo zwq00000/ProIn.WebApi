@@ -1,0 +1,86 @@
+##### 测量任务 数据访问 #####
+##### /measuretasks #####
+taskSessions:
+  get:
+    operationId: getMeasureTasks
+    summary: 获取测量任务分页列表
+    description: 获取已经完成的测量任务列表
+    tags:
+      - TaskSession
+    parameters:
+      - name: pageSize
+        in: query
+        description: Number of items returned
+        type: integer
+        default: 20
+        required: false
+        enum: [10,20,50,100]
+      - name: pageNumber
+        in: query
+        description: Page number
+        type: integer
+        default: 0
+        required: false
+      - name: partId
+        in: query
+        type: string
+        description: 工件Id
+        required: false
+      - name: startDate
+        type: string
+        format: date
+        in: query
+        description: Task start Data Range,,if empty use today
+        required: false
+      - name: endDate
+        type: string
+        format: date
+        in: query
+        description: Task end Data Range,if empty use today
+        required: false
+    responses:
+      200:
+        description: response a list of TaskSessions
+        schema:
+          $ref: "#/definitions/PagedTaskSessions"
+      404:
+        $ref: "#/responses/NotFound"
+
+  post:
+    operationId: createTaskSession
+    summary: create a TaskSession
+    description: 测量完成后，提交测量结果
+    tags:
+      - TaskSession
+    parameters:
+      - name: taskSession
+        in: body
+        description: measureTeask and values
+        schema:
+          $ref: "#/definitions/TaskSession"
+    
+    responses:
+      201:
+        description: taskSession succesfully posted
+      400:
+        $ref: "#/responses/BadRequest"
+
+taskSessions_{ssid}:
+  get:
+    operationId: getTaskSession
+    summary: get a taskSession by sessionId
+    tags:
+      - TaskSession
+    parameters:
+      - name: ssid
+        in: path
+        type: integer
+        format: int64
+        required: true
+    responses:
+      200:
+        description: response a taskSession
+        schema:
+          $ref: "#/definitions/TaskSession"
+      404:
+        $ref: "#/responses/NotFound"

@@ -1,0 +1,33 @@
+##/workpieces/{partId}:
+path:
+  parameters:
+    - name: partId
+      in: path
+      required: true
+      description: The Workpiece PartId
+      type: string
+  get:
+    tags:
+      - Workpiece
+    operationId: getWorkpiece
+    summary: get a workpiece
+    description: return a single workpiece for its partId
+    responses:
+      200:
+        description: return a Workpiece
+        schema:
+          $ref: "#/definitions/Workpiece"
+      404:
+        $ref: "#/responses/NotFound"
+
+  delete:
+    operationId: deleteWorkpiece
+    summary: delete a workpiece
+    tags:
+      - Workpiece
+    responses:
+      204:
+        description: delete succesfully workpiece
+      404:
+        $ref: "#/responses/NotFound"
+        

@@ -1,0 +1,299 @@
+swagger: "2.0"
+
+info:
+  description: "This is a ProIn data access WebApi"
+  version: "1.0.0"
+  title: "ProIn.WebApi"
+  contact:
+    email: "zwq00000@hotmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Workpiece"
+  description: "测量工件"
+  externalDocs:
+    description: "Find out more"
+    url: "http://primen.net"
+- name: "CpSpec"
+  description: "检测规格"
+  externalDocs:
+    description: "Find out more"
+    url: "http://primen.net"
+schemes:
+  - http
+  - https
+
+paths:
+################ 工件 ################
+  /workpiece:
+    get:
+      summary: Get Workpieces list
+      description: Returns a list of all workpieces,the list supports paging.
+      tags:
+        - Workpiece
+      parameters:
+        - $ref: "#/parameters/pageSize"
+        - $ref: "#/parameters/pageNumber"
+      responses:
+        200:
+          description: A list of Workpiece
+          schema:
+            allOf:
+              - $ref: "#/definitions/Paging"
+              - $ref: "#/definitions/Workpieces"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+
+    post:
+      summary: Creates a workpiece
+      description: Adds a new workpiece to the workpieces list.
+      tags:
+        - Workpiece
+      parameters:
+        - name: workpiece
+          in: body
+          description: The workpiece to create.
+          schema:
+            $ref: "#/definitions/Workpiece"
+      responses:
+        200:
+          description: workpiece succesfully created.
+        400:
+          description: workpiece couldn't have been created.
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+
+    put:
+      summary: "modify workpiece in your list"
+      description: update a existed workpiece and modify it
+      tags:
+        - Workpiece
+      parameters:
+      - name: workpiece
+        in: body
+        description: The workpiece to create.
+        schema:
+          $ref: "#/definitions/Workpiece"
+      responses:
+        200:
+          description: update succesfully
+        404:
+          description: not found existed workpiece
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+          
+  /workpieces/{partId}:
+    parameters:
+      - name: partId
+        in: path
+        required: true
+        description: The Workpiece PartId
+        type: string
+    get:
+      tags:
+        - Workpiece
+      summary: get a workpiece
+      description: return a single workpiece for its partId
+      responses:
+        200:
+          description: return a Workpiece
+          schema:
+            $ref: "#/definitions/Workpiece"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+    put:
+      summary: modify a workpiece
+      tags:
+        - Workpiece
+      parameters:
+        - name: workpiece
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Workpiece"
+      responses:
+        200:
+          description: modify succesfully workpiece
+        404:
+          description: not found existed workpiece
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+          
+  /workpieces/{id}/cpspecs:
+    get:
+      summary: get a cpspec list in thie workpiece
+      tags:
+        - Workpiece
+        - CpSpec
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the Workpiece PartId
+          type: string
+      responses:
+        200:
+          description: return a cpspec list
+          schema:
+            $ref: "#/definitions/CpSpecs"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+################ 安全 ################
+securityDefinitions:
+  OauthSecurity:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: 'https://oauth.simple.api/authorization'
+    tokenUrl: 'https://oauth.simple.api/token'
+    scopes:
+      admin: Admin scope
+      user: User scope
+  MediaSecurity:
+    type: apiKey
+    in: query
+    name: media-api-key
+  LegacySecurity:
+    type: basic
+security: 
+  - LegacySecurity: []
+
+################ 预定义 ################
+definitions:
+  Workpiece:
+    type: object
+    title: 被测工件
+    required:
+      - PartId
+    properties:
+      PartId:
+        type: string
+        description: 部件Id
+      Category:
+        type: string
+        description: 部件类别
+      PartName:
+        type: string
+        description: 品名
+      PartNumber:
+        type: string
+        description: 产品代码
+      PartDwgNo:
+        type: string
+        description: 图号/Part Drawing Number
+      Description:
+        type: string
+        description: 产品描述
+
+  Workpieces:
+    type: array
+    title: 工件集合
+    items:
+      $ref: "#/definitions/Workpiece"
+      
+  ################ 检测规格定义 ################
+  CpSpec:
+    type: object
+    title: 检测项
+    description: 检测项定义
+    required:
+      - SpecId
+      - SpecName
+    properties:
+      SpecId:
+        type: string
+        description: 测量项目ID
+      OrderNo:
+        type: integer
+        description: 默认顺序号，该检测项在任务中的排序
+      SpecName:
+        type: string
+        description: 项目名称
+      PartId:
+        type: string
+        description: 产品Id
+      Standard:
+        type: string
+        description: 测量标准规范编号
+      GageType:
+        type: string
+        description: 千分表/千分尺..
+      ValueType:
+        type: string
+        description: 逻辑型或者 数值型
+        enum:
+          - Number
+          - Logic
+      Precision:
+        type: integer
+        description: 测量精度，小数点后保留位数
+      Units:
+        type: string
+        description: 测量单位 mm/N...
+      ToleranceDefine:
+        type: string
+        description: 公差定义
+      Instruction:
+        type: string
+        description: 操作说明
+  CpSpecs:
+    type: array
+    items:
+      $ref: "#/definitions/CpSpec"
+
+  ################ 分页定义 ################
+  Paging:
+    properties:
+      totalItems:
+        description: 总数量
+        type: integer
+      totalPages:
+        description: 总页数
+        type: integer
+      pageSize:
+        description: 页面大小
+        type: integer
+        default: 20
+      currentPage:
+        description: 当前页码
+        type: integer
+        default: 0
+  ################ 标准错误信息 ################
+  Error:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+responses:
+  Standard500ErrorResponse:
+    description: An unexpected error occured.
+    schema:
+      $ref: "#/definitions/Error"
+
+################ 参数定义 ################
+parameters:
+  partId:
+    name: partId
+    in: path
+    required: true
+    description: The workpiece's Id
+    type: string
+  pageSize:
+    name: pageSize
+    in: query
+    description: Number of items returned
+    type: integer
+    default: 20
+  pageNumber:
+    name: pageNumber
+    in: query
+    description: Page number
+    type: integer
+    default: 0
+
+externalDocs:
+  description: "Find out more about ProIn"
+  url: "http://Primen.net/OpenAPI"

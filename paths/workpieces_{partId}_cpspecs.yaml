@@ -1,0 +1,24 @@
+          
+##### CpSpec Path defined #####
+##/workpieces/{partId}/cpspecs:
+path:
+  get:
+    summary: get a cpspec list in thie workpiece
+    operationId: getCpspecsByPartId
+    tags:
+      - CpSpec
+    parameters:
+      - name: partId
+        in: path
+        required: true
+        description: the Workpiece PartId
+        type: string
+    responses:
+      200:
+        description: return a cpspec list
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/CpSpec"
+      404:
+        $ref: "#/responses/NotFound"

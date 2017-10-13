@@ -1,0 +1,16 @@
+  responses:
+    ##### 服务器内部错位 #####
+    Standard500ErrorResponse:
+      description: An unexpected error occured.
+      schema:
+        $ref: "#/definitions/Error"
+
+    ##### BadRequest disvalidated model status 400 #####
+    BadRequest:
+      description: bed request or model not validated
+      schema:
+        $ref: "#/definitions/ModelStateDictionary"
+
+    ##### Not found entry 404 #####
+    NotFound:
+      description: not found

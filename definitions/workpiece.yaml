@@ -1,0 +1,52 @@
+##### 工件定义 #####
+Workpiece:
+  type: object
+  title: 被测工件
+  required:
+    - PartId
+  properties:
+    PartId:
+      type: string
+      description: 部件Id
+      x-chance-type: guid
+    Category:
+      type: string
+      description: 部件类别
+      default: 默认类别
+      x-chance-type: word
+    PartName:
+      type: string
+      description: 品名
+      x-chance-type: word
+    PartNumber:
+      type: string
+      description: 产品代码
+      x-chance-type: string
+    PartDwgNo:
+      type: string
+      description: 图号/Part Drawing Number
+    Description:
+      type: string
+      description: 产品描述
+      x-chance-type: sentence
+      
+Workpieces:
+  type: array
+  title: 工件集合
+  items:
+    $ref: "#/definitions/Workpiece"
+
+##### 工件列表分页结果 #####
+PagedWorkpieces:
+  type: object
+  title: 工件分页结果
+  properties:
+    paging:
+      description: 分页数据
+      $ref: "#/definitions/Paging"
+    data:
+      description: 工件集合
+      type: array
+      items:
+        $ref: "#/definitions/Workpiece"
+

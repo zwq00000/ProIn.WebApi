@@ -1,0 +1,4 @@
+
+D:\Projects\PrimaN\ProIn Projects\Extensions\openapi>set jarPath=d:\GitHub\My Repos\swagger 
+
+D:\Projects\PrimaN\ProIn Projects\Extensions\openapi>java -jar "d:\GitHub\My Repos\swagger\swagger-codegen-cli-3.0.0-20170824.041313-2.jar" generate -DdebugOperations  -i ../swagger.yaml  -l aspnetcore  --auth zwq00000@gmail.com  --config aspnetcore.config.json  --git-user-id "zwq00000"  --git-repo-id "proin.webapi"  --release-note "Github integration demo"  --template-dir ./templates/aspnetcore  -o aspnetcore 

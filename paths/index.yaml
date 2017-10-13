@@ -1,0 +1,43 @@
+##### 工件实体 #####
+/workpieces:
+  $ref: workpieces.yaml#/workpieces
+/workpieces/new:
+  $ref: workpieces_new.yaml#/workpieces_new
+/workpieces/{partId}:
+  $ref: workpieces_{partId}.yaml#/path
+/workpieces/{partId}/cpspecs:
+  $ref: ./workpieces_{partId}_cpspecs.yaml#/path
+
+  ##### 工件分类 #####
+/categories:
+  $ref: ./workpieces_categories.yaml#/categories
+
+##### 检测规格实体 #####
+/cpspec/{specId}:
+  $ref: /cpspec_{specId}.yaml#/path
+
+##### 测量任务 #####
+/taskSessions:
+  $ref: ./taskSession.yaml#/taskSessions
+
+/taskSessions/{ssid}:
+  $ref: ./taskSession.yaml#/taskSessions_{ssid}
+
+##### 测量值 #####
+/measureValue/{specId}:
+  $ref: ./measureValue.yaml#/MeasureValue_{specId}
+
+
+##### 用户对象 #####
+/users:
+  $ref: ./users.yaml#/users
+/users/{uid}:
+  $ref: ./users.yaml#/users_{uid}
+
+##### Login #####
+/account/login:
+  $ref: ./account.yaml#/login
+/account/info:
+  $ref: ./account.yaml#/info
+/account/logout:
+  $ref: ./account.yaml#/logout

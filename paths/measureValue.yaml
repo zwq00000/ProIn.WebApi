@@ -1,0 +1,32 @@
+##### 测量数据 #####
+
+MeasureValue_{specId}:
+  parameters:
+  - name: specId
+    in: path
+    description: 检测项Id
+    required: true
+    type: string
+  get:
+    operationId: getMeasureValue
+    summary: 获取测量值(数值集合)
+    tags:
+      - MeasureValue
+    parameters:
+      - name: startDate
+        in: query
+        description: 开始日期
+        type: string
+        format: date
+      - name: endDate
+        in: query
+        description: 结束日期
+        type: string
+        format: date
+    responses:
+      200:
+        description: 返回测量值集合
+        schema:
+          $ref: "#/definitions/MeasureValue"
+      404:
+        $ref: "#/responses/NotFound"

@@ -1,0 +1,62 @@
+##### 需要提交的 测量记录 #####
+MeasureRecord:
+  type: object
+  title: 测量记录
+  properties:
+    SessionId:
+      type: integer
+      format: int64
+      title: 任务会话Id
+      x-type-options:
+        min: 1
+        max: 10000
+    SpecId:
+      type: string
+      title: 规格Id
+      x-chance-type: guid
+    Time:
+      type: string
+      format: date-time
+      title: 数据时间
+      x-chance-type: date
+    Count:
+      type: integer
+      format: int32
+      title: 样本数量
+      x-type-options:
+        min: 1
+        max: 10
+    Stdev:
+      type: number
+      format: double
+      title: 本组样本标准差
+      x-type-options:
+        min: 1
+        max: 10
+        fixed: 3
+    Mean:
+      type: number
+      format: double
+      title: 本组样本均值
+      x-type-options:
+        min: 1
+        max: 10
+        fixed: 3
+    Range:
+      type: number
+      format: double    
+      title: 本组样本极差
+      x-type-options:
+          min: 1
+          max: 10
+          fixed: 3
+    Values:
+      type: array
+      title: 测量值
+      items:
+        type: number
+        format: double
+        x-type-options:
+          min: 1
+          max: 10
+          fixed: 3

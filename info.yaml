@@ -1,0 +1,8 @@
+description: "This is a ProIn data access WebApi"
+version: 1.0.0
+title: "ProIn.WebApi"
+contact:
+  email: "zwq00000@hotmail.com"
+license:
+  name: "Apache 2.0"
+  url: "http://www.apache.org/licenses/LICENSE-2.0.html"  
