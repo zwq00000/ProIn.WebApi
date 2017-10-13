@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         connect: {
             server: {
                 options: {
-                    port:10010,
+                    port:5000,
                     keepalive: true,
                     middleware: function (connect, options) {
                         var middlewares = [];
