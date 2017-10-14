@@ -7,7 +7,8 @@
     "build": "multi-file-swagger index.yaml -o yaml -f swagger.yaml && swagger validate swagger.yaml",
     "gen-test": "swagger project generate-test  -f request -t should  apitest",
     "test": "swagger project test apitest",
-    "mock": "cd api-mock && grunt"
+    "mock": "cd ../api-mock && grunt",
+    "gendoc":"swagger-codegen generate -i swagger.yaml -l html2 -o docs"
   },
   "author": "zwq00000@gmail.com",
   "license": "ISC"

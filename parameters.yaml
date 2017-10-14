@@ -15,7 +15,7 @@ parameters:
     required: false
     enum: [10,20,50,100]
   pageNumber:
-    name: pageNumber
+    name: page
     in: query
     description: 页码，从 0 开始
     type: integer

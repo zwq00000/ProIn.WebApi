@@ -6,7 +6,7 @@ path:
     summary: get a cpspec list in thie workpiece
     operationId: getCpspecsByPartId
     tags:
-      - CpSpec
+      - Workpiece
     parameters:
       - name: partId
         in: path

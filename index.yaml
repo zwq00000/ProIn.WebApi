@@ -13,10 +13,12 @@ produces:
   - application/json
 consumes:
   - application/json
-  - multipart/form-data
 
 tags:
   $ref: tags.yaml#/tags
+
+security:
+  - basicAuth: []
 
 paths:
   $ref: paths/index.yaml
@@ -29,5 +31,8 @@ parameters:
 
 responses:
   $ref: responses.yaml#/responses
+
+securityDefinitions:
+  $ref: security.yaml#/securityDefinitions
 
 

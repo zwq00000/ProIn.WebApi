@@ -7,12 +7,14 @@ ProIn.WebApi v1.0
   - index.yaml      (主控文档，引入各个子模块)
     - info.yaml       (接口信息/版本)
     - tags.yaml       (Tags)
+    - responses.yaml  (公共的响应声明)
+    - parameters.yaml (共用的参数声明)
     - Definitions    (DTO 实体定义)
         - index.yaml  (definitions 模块入口)
     - paths             (请求路径目录)
         - index.yaml    (paths 模块入口)
 
-## 生成
+## 生成/合并 Swagger 文档
 
 执行以下脚本，构建api文件，构建过程读取 index.yaml 合并各个模块生成 swagger.yaml 文件，并对该文件进行验证。
 
@@ -24,6 +26,16 @@ ProIn.WebApi v1.0
     multi-file-swagger index.yaml -o yaml -f swagger.yaml
     swagger validate swagger.yaml
 ```
+
+## 生成 api文档
+
+```sh
+    npm run gendoc
+```
+根据 swagger.yaml 文件生成 html2 文档
+
+*需要安装 swagger-codegen-cli*
+
 
 # 资源接口
 
@@ -77,5 +89,5 @@ ProIn.WebApi v1.0
     - status code 204
 
 
-![](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
+[Restful api 设计参考](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
 

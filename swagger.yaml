@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   description: This is a ProIn data access WebApi
   version: 1.0.0
-  title: ProIn.WebApi
+  title: Proin.WebApi
   contact:
     email: zwq00000@hotmail.com
   license:
@@ -16,7 +16,6 @@ produces:
   - application/json
 consumes:
   - application/json
-  - multipart/form-data
 tags:
   - name: Workpiece
     description: 测量工件
@@ -41,6 +40,8 @@ tags:
     description: 用户
   - name: Account
     description: 用户登录和账户
+security:
+  - basicAuth: []
 paths:
   /workpieces:
     get:
@@ -98,7 +99,7 @@ paths:
           $ref: '#/responses/BadRequest'
         '404':
           description: not found existed workpiece
-  /workpieces/new:
+  /workpieces/getnew:
     get:
       operationId: getNewWorkpiece
       summary: 获得新的的工件
@@ -145,7 +146,7 @@ paths:
       summary: get a cpspec list in thie workpiece
       operationId: getCpspecsByPartId
       tags:
-        - CpSpec
+        - Workpiece
       parameters:
         - name: partId
           in: path
@@ -161,7 +162,7 @@ paths:
               $ref: '#/definitions/CpSpec'
         '404':
           $ref: '#/responses/NotFound'
-  /categories:
+  /workpieces/categories:
     get:
       operationId: getCategories
       summary: 获取工件分类列表
@@ -585,7 +586,7 @@ definitions:
           - Logic
       precision:
         type: integer
-        description: 测量精度，小数点后保留位数
+        description: 测量值有效数字，小数点后保留位数
       units:
         type: string
         description: 测量单位 mm/N...
@@ -971,3 +972,17 @@ responses:
       $ref: '#/definitions/ModelStateDictionary'
   NotFound:
     description: not found
+  NoContent:
+    description: no response content
+  UnauthorizedError:
+    description: Authentication information is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string
+securityDefinitions:
+  internalApiKey:
+    type: apiKey
+    in: header
+    name: api_key
+  basicAuth:
+    type: basic

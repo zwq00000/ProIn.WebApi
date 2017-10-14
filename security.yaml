@@ -1,0 +1,7 @@
+securityDefinitions:
+  internalApiKey:
+    type: apiKey
+    in: header
+    name: api_key
+  basicAuth:
+    type: basic

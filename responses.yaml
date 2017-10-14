@@ -1,16 +1,27 @@
   responses:
-    ##### 服务器内部错位 #####
+    ##### 500 服务器内部错位 #####
     Standard500ErrorResponse:
       description: An unexpected error occured.
       schema:
         $ref: "#/definitions/Error"
 
-    ##### BadRequest disvalidated model status 400 #####
+    ##### 400 BadRequest disvalidated model status #####
     BadRequest:
       description: bed request or model not validated
       schema:
         $ref: "#/definitions/ModelStateDictionary"
 
-    ##### Not found entry 404 #####
+    ##### 404 Not found entry #####
     NotFound:
       description: not found
+
+    ##### 204 NoContent #####
+    NoContent:
+      description: no response content
+    
+    ##### 401 Unauthorized #####
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          type: string

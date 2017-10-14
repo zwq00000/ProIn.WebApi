@@ -1,5 +1,5 @@
 #/workpiece:
-workpieces_new:
+workpieces_getnew:
   get:
     operationId: getNewWorkpiece
     summary: 获得新的的工件

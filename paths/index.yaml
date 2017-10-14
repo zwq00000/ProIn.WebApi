@@ -1,15 +1,15 @@
 ##### 工件实体 #####
 /workpieces:
   $ref: workpieces.yaml#/workpieces
-/workpieces/new:
-  $ref: workpieces_new.yaml#/workpieces_new
+/workpieces/getnew:
+  $ref: workpieces_new.yaml#/workpieces_getnew
 /workpieces/{partId}:
   $ref: workpieces_{partId}.yaml#/path
 /workpieces/{partId}/cpspecs:
   $ref: ./workpieces_{partId}_cpspecs.yaml#/path
 
   ##### 工件分类 #####
-/categories:
+/workpieces/categories:
   $ref: ./workpieces_categories.yaml#/categories
 
 ##### 检测规格实体 #####
